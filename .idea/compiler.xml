@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="doors" />
         <module name="wood" />
+        <module name="yard" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="doors" target="1.8" />
       <module name="parent" target="1.8" />
       <module name="wood" target="1.5" />
+      <module name="yard" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

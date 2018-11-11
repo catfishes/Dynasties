@@ -6,9 +6,7 @@
     </facet>
     <facet type="web" name="Web">
       <configuration>
-        <webroots>
-          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
-        </webroots>
+        <webroots />
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
@@ -56,6 +54,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.0.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ibatis:ibatis-sqlmap:2.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.boot:dubbo-spring-boot-starter:0.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:dubbo:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />

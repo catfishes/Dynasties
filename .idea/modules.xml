@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/doors/doors.iml" filepath="$PROJECT_DIR$/doors/doors.iml" />
       <module fileurl="file://$PROJECT_DIR$/parent/parent.iml" filepath="$PROJECT_DIR$/parent/parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/wood/wood.iml" filepath="$PROJECT_DIR$/wood/wood.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yard/yard.iml" filepath="$PROJECT_DIR$/yard/yard.iml" />
     </modules>
   </component>
 </project>

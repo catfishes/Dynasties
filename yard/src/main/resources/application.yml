@@ -1,0 +1,4 @@
+#yml配置，最后一个追加变量值前加空格
+spring:
+  profiles:
+    active: dev
