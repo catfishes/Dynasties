@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- 读取用户信息 -->
+<sqlMap namespace="yhxx">
+    <cacheModel id="cacheYhxx" type="LRU">
+        <flushInterval hours="24" />
+        <flushOnExecute statement=""/>
+        <flushOnExecute statement=""/>
+        <flushOnExecute statement=""/>
+        <property name="" value=""/>
+    </cacheModel>
+
+    <select id="selectYhxx" parameterClass="map" resultClass="map">
+      SEELCT * FROM YHXX T WEHRE T.zhid = #ZHID#
+    </select>
+</sqlMap>

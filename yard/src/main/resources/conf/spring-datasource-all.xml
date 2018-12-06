@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    <description>
+        <![CDATA[
+    创建日期:2011-1-13
+    描述:Dao层的数据库连接配置及数据连接源和对象的生成和基础架构管理Dao、Bo层的接口配置
+    作者:
+    版本:1.0
+    备注:
+    ]]>
+    </description>
+
+   <!-- ibatis的数据源及对象  -->
+
+    <bean id="dataSourceBase" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+
+        <property name="driverClassName" value="${DBMS_DRIVER}"/>
+        <property name="url" value="${DBMS_URL}"/>
+        <property name="username" value="${DBMS_USER}"/>
+        <property name="password" value="${DBMS_PASS}"/>
+
+        <property name="maxActive" value="100"/>
+        <property name="maxIdle" value="30"/>
+        <property name="maxWait" value="1000"/>
+        <property name="defaultAutoCommit" value="true"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="60"/>
+        <property name="validationQuery">
+	       <value>select 1 from dual</value>
+	    </property>
+    </bean>
+
+    <!-- 2011.12.30 yanghongjian 使用tomcate的连接池  未测试 -->
+    <!--<bean id="tomcatDs" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+    <!--<property name="jndiName" value="java:comp/env/wzDs"/>-->
+    <!--<property name="jndiName">  -->
+    <!--<value>java:comp/env/jdbc/wzDs</value>  -->
+    <!--</property>  -->
+    <!--</bean>-->
+
+    <!--事务管理器 -->
+    <bean id="txManagerBase"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceBase"/>
+    </bean>
+
+    <!-- 声明式的事务设置 -->
+    <tx:advice id="txAdviceBase" transaction-manager="txManagerBase">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" rollback-for="Exception"/>
+            <tx:method name="select*" read-only="true" rollback-for="Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="doService" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="extract*" propagation="REQUIRED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- 定义AspectJ的切面 -->
+    <aop:config >
+        <aop:pointcut id="aopPointcut" expression="execution(* jy.*.bo..*.*(..))"/>
+        <aop:advisor advice-ref="txAdviceBase" pointcut-ref="aopPointcut"/>
+    </aop:config>
+
+    <!-- 创建ibatis的sqlMapClient对象 -->
+    <bean id="sqlMapClientBase" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocations">
+            <list>
+                <value>classpath:js/conf/sqlmap/spplication/sqlmap-yard.xml</value>
+            </list>
+        </property>
+        <property name="dataSource" ref="dataSourceBase"/>
+    </bean>
+
+
+    <!-- 根据sqlMapClien创建一个SqlMapClient模版类 -->
+    <bean id="sqlMapClientTemplateBase" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+        <property name="sqlMapClient" ref="sqlMapClientBase"/>
+    </bean>
+    <!-- 数据库工具类 -->
+    <bean id="daoDbUtils" class="jy.dao.DaoDbUtils">
+        <!--<constructor-arg index="0" ref="sqlMapClientOracle"/>-->
+        <property name="sqlMap" ref="sqlMapClientBase"/>
+        <!--<constructor-arg index="1">-->
+        <!--<ref bean="getDbType"/>-->
+        <!--</constructor-arg>-->
+        <!--<property name="sqlMap" ref="sqlMapClientOracle"/>-->
+    </bean>
+
+    <!-- 数据库工具类 -->
+    <bean id="boDbUtils" class="jy.bo.BoDbUtils">
+        <property name="iDao" ref="daoDbUtils"/>
+    </bean>
+
+</beans>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- 登陆账户信息表 -->
+<sqlMap namespace="dlzhxx">
+    <cacheModel id="cacheDlzhxx" type="LRU">
+        <flushInterval hours="24" />
+        <flushOnExecute statement="updateDlzhxx"/>
+        <flushOnExecute statement="insertDlzhxx"/>
+        <flushOnExecute statement="deleteDlzhxx"/>
+        <property name="cache-size" value="50"/>
+    </cacheModel>
+
+    <select id="selectDlzhxx" parameterClass="map" resultClass="map">
+      SEELCT t.yxbz,t.mm,t.zhid FROM dlzhxx T WEHRE T.ZHID = #ZHID#
+    </select>
+
+    <update id="updateDlzhxx" parameterClass="map">
+
+        update zhdlxx t set
+        <isNotEmpty property="YXBZ">
+            t.yxbz = #YXBZ#
+            <isNotEmpty property="MM" prepend=",">
+                T.MM = #MM#
+            </isNotEmpty>
+        </isNotEmpty>
+        <isEmpty property="MM">
+            T.MM = #MM#
+        </isEmpty>
+        WHERE T.ZHID = #ZHID#
+    </update>
+
+    <insert id="insertDlzhxx" parameterClass="map">
+        insert into dlzhxx ('ZHID','YXBZ','MM')
+        values (#ZHID#,'Y',#MM#)
+    </insert>
+
+    <delete id="deleteDlzhxx" parameterClass="map">
+        delete from dlzhxx t where t.zhid = #ZHID#
+    </delete>
+
+</sqlMap>

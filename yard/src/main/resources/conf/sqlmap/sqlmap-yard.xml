@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!DOCTYPE sqlMapConfig
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
-</beans>
+
+<sqlMapConfig>
+
+    <sqlMap resource="sqlmap-yard-jsxx.xml"/>
+    <sqlMap resource="sqlmap-yard-qxxx.xml"/>
+    <sqlMap resource="sqlmap-yard-xtxx.xml"/>
+    <sqlMap resource="sqlmap-yard-yhxx.xml"/>
+
+</sqlMapConfig>
+
